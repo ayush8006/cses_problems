@@ -15,16 +15,17 @@ void solve(){
 
     
     int ans=1;
+    //fermat's little theorem
     
 
     while(c){
         if(c&1){
             
-            ans=(ans*b)%mod;
+            ans=(ans*b)%(mod-1);
             //cout<<ans<<" "<<a<<"\n";
         }
 
-        b=(b*b)%mod;
+        b=(b*b)%(mod-1);
         c=(c>>1);
     }
     b=ans;
