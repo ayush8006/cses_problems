@@ -19,24 +19,37 @@ int main() {
     vector<ll> freq(max_val + 1, 0);
     for (ll i = 0; i < n; ++i) freq[a[i]]++;
 
-    vector<ll> count(max_val + 1, 0);
-    for (ll i = 1; i <= max_val; ++i) {
-        for (ll j = i; j <= max_val; j += i) count[i] += freq[j];
-    }
+    map<int,int>mp;
+    vector<bool>prime(max_val+1,true);
+    prime[0]=prime[1]=false;
 
-    vector<ll> mu(max_val + 1, 1);
-    for (ll i = 2; i <= max_val; ++i) {
-        if (mu[i] == 1) {
-            for (ll j = i; j <= max_val; j += i) mu[j] *= -1;
-            for (ll j = i * i; j <= max_val; j += i * i) mu[j] = 0;
+    for(int i=2;i<=max_val;i++){
+
+        if(prime[i]){
+
+            for(int j=i;j<=max_val;j+=i){
+                prime[j]=false;
+                mp[i]+=freq[j];
+            }
+
         }
+
     }
 
-    ll result = 0;
-    for (ll i = 1; i <= max_val; ++i) {
-        result += mu[i] * (count[i] * (count[i] - 1) / 2);
+    long long ans=n*(n-1)/2;
+   // cout<<ans<<endl;
+
+    for(auto it:mp){
+        
+
+        ans-=(it.second*(it.second-1))/2;
+       //  cout<<it.first<<" "<<it.second<<" "<<ans<<endl;
+
+
     }
 
-    cout << result << "\n";
+
+
+    cout << ans<< "\n";
     return 0;
 }
